@@ -3,7 +3,7 @@
 // license that can be found in the LICENSE file.
 
 use num::complex::{Complex32, Complex64};
-use libc::{c_double, c_int, c_float, c_long, c_void};
+use libc::{c_double, c_float, c_long, c_void};
 
 pub trait CPtr<T> {
     fn as_c_ptr(self) -> T;
@@ -27,7 +27,7 @@ macro_rules! c_ptr_impl(
     );
 );
 
-c_ptr_impl!(i32, c_int);
+c_ptr_impl!(i32, u32);
 c_ptr_impl!(i64, c_long);
 c_ptr_impl!(f32, c_float);
 c_ptr_impl!(f64, c_double);
