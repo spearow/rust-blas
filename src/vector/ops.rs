@@ -4,12 +4,12 @@
 
 //! Wrappers for vector functions.
 
-use num::complex::{Complex, Complex32, Complex64};
-use std::cmp;
 use default::Default;
+use matrix::Matrix;
+use num::complex::{Complex, Complex32, Complex64};
 use pointer::CPtr;
 use scalar::Scalar;
-use matrix::Matrix;
+use std::cmp;
 use vector::ll::*;
 use vector::Vector;
 
@@ -91,24 +91,24 @@ mod axpy_tests {
 
     #[test]
     fn real() {
-        let x = vec![1f32,-2f32,3f32,4f32];
-        let y = vec![3f32,7f32,-2f32,2f32];
+        let x = vec![1f32, -2f32, 3f32, 4f32];
+        let y = vec![3f32, 7f32, -2f32, 2f32];
         let mut z = y.clone();
 
         Axpy::axpy(&1f32, &y, &mut z);
         Axpy::axpy(&1f32, &x, &mut z);
-        assert_eq!(z, vec![7f32,12f32,-1f32,8f32]);
+        assert_eq!(z, vec![7f32, 12f32, -1f32, 8f32]);
     }
 
     #[test]
     fn slice() {
-        let x = vec![1f32,-2f32,3f32,4f32,5f32];
-        let y = vec![3f32,7f32,-2f32,2f32];
+        let x = vec![1f32, -2f32, 3f32, 4f32, 5f32];
+        let y = vec![3f32, 7f32, -2f32, 2f32];
         let mut z = y.clone();
 
         Axpy::axpy(&1f32, &y, &mut z);
         Axpy::axpy(&1f32, &x[..4], &mut z);
-        assert_eq!(z, vec![7f32,12f32,-1f32,8f32]);
+        assert_eq!(z, vec![7f32, 12f32, -1f32, 8f32]);
     }
 
     #[test]
@@ -120,7 +120,6 @@ mod axpy_tests {
         Axpy::axpy(&Complex::new(-1f32, 1f32), &y, &mut z);
         assert_eq!(z, vec![Complex::new(0f32, 6f32), Complex::new(-4f32, 2f32)]);
     }
-
 }
 
 /// Computes `a * x` and stores the result in `x`.
@@ -161,7 +160,7 @@ mod scal_tests {
 
     #[test]
     fn real() {
-        let mut x = vec![1f32,-2f32,3f32,4f32];
+        let mut x = vec![1f32, -2f32, 3f32, 4f32];
 
         Scal::scal(&-2f32, &mut x);
         assert_eq!(x, vec![-2f32, 4f32, -6f32, -8f32]);
@@ -169,7 +168,7 @@ mod scal_tests {
 
     #[test]
     fn slice() {
-        let mut x = vec![1f32,-2f32,3f32,4f32];
+        let mut x = vec![1f32, -2f32, 3f32, 4f32];
 
         Scal::scal(&-2f32, &mut x[..3]);
         assert_eq!(x, vec![-2f32, 4f32, -6f32, 4f32]);
@@ -190,7 +189,6 @@ mod scal_tests {
         Scal::scal(&Complex::new(2f32, 0f32), &mut x);
         assert_eq!(x, vec![Complex::new(2f32, 2f32), Complex::new(2f32, 6f32)]);
     }
-
 }
 
 /// Swaps the content of `x` and `y`.
@@ -224,11 +222,10 @@ mod swap_tests {
 
     #[test]
     fn real() {
-        let mut x = vec![1f32,-2f32,3f32,4f32];
-        let mut y = vec![2f32,-3f32,4f32,1f32];
+        let mut x = vec![1f32, -2f32, 3f32, 4f32];
+        let mut y = vec![2f32, -3f32, 4f32, 1f32];
         let xr = y.clone();
         let yr = x.clone();
-
 
         Swap::swap(&mut x, &mut y);
         assert_eq!(x, xr);
@@ -237,10 +234,10 @@ mod swap_tests {
 
     #[test]
     fn slice() {
-        let mut x = [1f32,-2f32,3f32,4f32];
-        let mut y = [2f32,-3f32,4f32,1f32];
-        let xr = [2f32,-3f32,4f32,1f32];
-        let yr = [1f32,-2f32,3f32,4f32];
+        let mut x = [1f32, -2f32, 3f32, 4f32];
+        let mut y = [2f32, -3f32, 4f32, 1f32];
+        let xr = [2f32, -3f32, 4f32, 1f32];
+        let yr = [1f32, -2f32, 3f32, 4f32];
 
         Swap::swap(&mut x[..], &mut y[..]);
         assert_eq!(x, xr);
@@ -258,7 +255,6 @@ mod swap_tests {
         assert_eq!(x, xr);
         assert_eq!(y, yr);
     }
-
 }
 
 /// Computes `x^T * y`.
@@ -313,8 +309,8 @@ mod dot_tests {
 
     #[test]
     fn real() {
-        let x = vec![1f32,-2f32,3f32,4f32];
-        let y = vec![1f32,1f32,1f32,1f32];
+        let x = vec![1f32, -2f32, 3f32, 4f32];
+        let y = vec![1f32, 1f32, 1f32, 1f32];
 
         let xr: f32 = Dot::dot(&x, &y);
         assert_eq!(xr, 6f32);
@@ -322,8 +318,8 @@ mod dot_tests {
 
     #[test]
     fn slice() {
-        let x = [1f32,-2f32,3f32,4f32];
-        let y = [1f32,1f32,1f32,1f32];
+        let x = [1f32, -2f32, 3f32, 4f32];
+        let y = [1f32, 1f32, 1f32, 1f32];
 
         let xr: f32 = Dot::dot(&x[..], &y[..]);
         assert_eq!(xr, 6f32);
@@ -337,7 +333,6 @@ mod dot_tests {
         let xr: Complex<f32> = Dot::dot(&x, &y);
         assert_eq!(xr, Complex::new(-2f32, 6f32));
     }
-
 }
 
 /// Computes `x^H * y`.
@@ -441,7 +436,7 @@ mod asum_tests {
 
     #[test]
     fn real() {
-        let x = vec![1f32,-2f32,3f32,4f32];
+        let x = vec![1f32, -2f32, 3f32, 4f32];
 
         let r: f32 = Asum::asum(&x);
         assert_eq!(r, 10f32);
@@ -449,7 +444,7 @@ mod asum_tests {
 
     #[test]
     fn slice() {
-        let x = [1f32,-2f32,3f32,4f32];
+        let x = [1f32, -2f32, 3f32, 4f32];
 
         let r: f32 = Asum::asum(&x[..]);
         assert_eq!(r, 10f32);
@@ -471,7 +466,7 @@ mod nrm2_tests {
 
     #[test]
     fn real() {
-        let x = vec![3f32,-4f32];
+        let x = vec![3f32, -4f32];
 
         let xr: f32 = Nrm2::nrm2(&x);
         assert_eq!(xr, 5f32);
@@ -479,7 +474,7 @@ mod nrm2_tests {
 
     #[test]
     fn slice() {
-        let x = [3f32,-4f32];
+        let x = [3f32, -4f32];
 
         let xr: f32 = Nrm2::nrm2(&x[..]);
         assert_eq!(xr, 5f32);
@@ -516,8 +511,8 @@ macro_rules! iamax_impl(
     );
 );
 
-iamax_impl!(f32,       cblas_i::samax);
-iamax_impl!(f64,       cblas_i::damax);
+iamax_impl!(f32, cblas_i::samax);
+iamax_impl!(f64, cblas_i::damax);
 iamax_impl!(Complex32, cblas_i::camax);
 iamax_impl!(Complex64, cblas_i::zamax);
 
@@ -528,7 +523,7 @@ mod iamax_tests {
 
     #[test]
     fn real() {
-        let x = vec![1f32,-2f32,3f32,4f32];
+        let x = vec![1f32, -2f32, 3f32, 4f32];
 
         let xr = Iamax::iamax(&x);
         assert_eq!(xr, 3usize);
@@ -536,7 +531,7 @@ mod iamax_tests {
 
     #[test]
     fn slice() {
-        let x = [1f32,-2f32,3f32,4f32];
+        let x = [1f32, -2f32, 3f32, 4f32];
 
         let xr = Iamax::iamax(&x[..]);
         assert_eq!(xr, 3usize);
@@ -555,7 +550,12 @@ mod iamax_tests {
 /// the value of the cosine of the angle in the Givens matrix, and `sin` is
 /// the sine.
 pub trait Rot: Sized {
-    fn rot<V: ?Sized + Vector<Self>, W: ?Sized + Vector<Self>>(x: &mut V, y: &mut W, cos: &Self, sin: &Self);
+    fn rot<V: ?Sized + Vector<Self>, W: ?Sized + Vector<Self>>(
+        x: &mut V,
+        y: &mut W,
+        cos: &Self,
+        sin: &Self,
+    );
 }
 
 macro_rules! rot_impl(($($t: ident), +) => (
@@ -577,15 +577,12 @@ rot_impl!(f32, f64);
 
 #[cfg(test)]
 mod rot_tests {
-    use vector::ops::{
-        Scal,
-        Rot,
-    };
+    use vector::ops::{Rot, Scal};
 
     #[test]
     fn real() {
-        let mut x = vec![1f32,-2f32,3f32,4f32];
-        let mut y = vec![3f32,7f32,-2f32,2f32];
+        let mut x = vec![1f32, -2f32, 3f32, 4f32];
+        let mut y = vec![3f32, 7f32, -2f32, 2f32];
         let cos = 0f32;
         let sin = 1f32;
 

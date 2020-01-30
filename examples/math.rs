@@ -1,8 +1,8 @@
 #[macro_use]
 extern crate rblas as blas;
+use blas::math::Marker::T;
 use blas::math::Mat;
 use blas::{Matrix, Vector};
-use blas::math::Marker::T;
 
 fn main() {
     let x = vec![1.0, 2.0];

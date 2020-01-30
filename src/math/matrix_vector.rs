@@ -2,26 +2,27 @@
 // Use of this source code is governed by a MIT-style
 // license that can be found in the LICENSE file.
 
-use std::ops::{
-    Mul,
-};
 use attribute::Transpose;
 use default::Default;
-use vector::Vector;
-use matrix_vector::ops::*;
-use matrix::Matrix;
-use math::Trans;
 use math::Mat;
+use math::Trans;
+use matrix::Matrix;
+use matrix_vector::ops::*;
+use std::ops::Mul;
+use vector::Vector;
 
 impl<'a, T> Mul<&'a dyn Vector<T>> for &'a dyn Matrix<T>
-    where T: Default + Copy + Gemv
+where
+    T: Default + Copy + Gemv,
 {
     type Output = Vec<T>;
 
     fn mul(self, x: &dyn Vector<T>) -> Vec<T> {
         let n = self.rows() as usize;
         let mut result = Vec::with_capacity(n);
-        unsafe { result.set_len(n); }
+        unsafe {
+            result.set_len(n);
+        }
         let scale = Default::one();
         let clear = Default::zero();
         let t = Transpose::NoTrans;
@@ -32,7 +33,8 @@ impl<'a, T> Mul<&'a dyn Vector<T>> for &'a dyn Matrix<T>
 }
 
 impl<'a, T> Mul<Trans<&'a dyn Vector<T>>> for &'a dyn Vector<T>
-    where T: Default + Ger + Gerc + Clone,
+where
+    T: Default + Ger + Gerc + Clone,
 {
     type Output = Mat<T>;
 
@@ -53,10 +55,10 @@ impl<'a, T> Mul<Trans<&'a dyn Vector<T>>> for &'a dyn Vector<T>
 
 #[cfg(test)]
 mod tests {
-    use Vector;
-    use Matrix;
-    use math::Mat;
     use math::Marker::T;
+    use math::Mat;
+    use Matrix;
+    use Vector;
 
     #[test]
     fn mul() {

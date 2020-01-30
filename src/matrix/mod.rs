@@ -3,9 +3,7 @@
 // license that can be found in the LICENSE file.
 
 //! Matrix operations.
-use attribute::{
-    Order,
-};
+use attribute::Order;
 
 pub mod ll;
 pub mod ops;
@@ -21,7 +19,9 @@ pub trait Matrix<T> {
         }
     }
     /// The order of the matrix. Defaults to `RowMajor`.
-    fn order(&self) -> Order { Order::RowMajor }
+    fn order(&self) -> Order {
+        Order::RowMajor
+    }
     /// Returns the number of rows.
     fn rows(&self) -> u32;
     /// Returns the number of columns.
